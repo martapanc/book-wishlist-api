@@ -9,8 +9,15 @@ class HealthController {
 
     @GetMapping("/health")
     fun getHealthStatus(): Status {
-        return Status(Date(), "UP")
+        return getStatus()
     }
+
+    @GetMapping("/")
+    fun getHomePage(): Status {
+        return getStatus()
+    }
+
+    private fun getStatus() = Status(Date(), "UP")
 }
 
 data class Status(val date: Date, val status: String)
