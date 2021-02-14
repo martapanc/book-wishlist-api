@@ -29,7 +29,10 @@ class WishListService {
             } else {
                 coauthors = mutableListOf()
             }
-            val book = Book(title, author, coauthors)
+
+            val coverUrl = cols[0].select("img").attr("src")
+
+            val book = Book(title, author, coauthors, coverUrl)
             bookList.add(book)
         }
 
