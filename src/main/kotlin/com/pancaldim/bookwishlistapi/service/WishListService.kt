@@ -12,7 +12,6 @@ class WishListService {
         val document = Jsoup.connect("https://www.amazon.co.uk/hz/wishlist/printview/${wishList.listId}").get()
         val bookList = mutableListOf<Book>()
         try {
-
             val table: Element = document.select("table")[0]
             val rows: Elements = table.select("tr")
 
