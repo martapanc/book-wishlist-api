@@ -31,6 +31,11 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("org.jsoup:jsoup:1.11.3")
+
+    implementation("com.fasterxml.jackson.core:jackson-core:2.12.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1")
 }
 
 tasks.withType<KotlinCompile> {
