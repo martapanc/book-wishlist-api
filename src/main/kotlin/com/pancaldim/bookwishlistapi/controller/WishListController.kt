@@ -21,7 +21,7 @@ class WishListController {
 
     val service = WishListService()
 
-    @GetMapping("/tech")
+    @RequestMapping(value = ["/tech"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getTechBooks(): ResponseEntity<Any> {
         return try {
             val scrapeList = service.scrapeList(WishList.Tech)
@@ -31,7 +31,7 @@ class WishListController {
         }
     }
 
-    @GetMapping("/non-fiction")
+    @RequestMapping(value = ["/non-fiction"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getNonFictionBooks(): ResponseEntity<Any> {
         return try {
             val scrapeList = service.scrapeList(WishList.NonFiction)
@@ -41,7 +41,7 @@ class WishListController {
         }
     }
 
-    @GetMapping("/fiction")
+    @RequestMapping(value = ["/fiction"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getFictionBooks(): ResponseEntity<Any> {
         return try {
             val scrapeList = service.scrapeList(WishList.Fiction)
@@ -51,11 +51,7 @@ class WishListController {
         }
     }
 
-    @RequestMapping(
-        value = ["/goodreads"],
-        produces = ["application/json"],
-        method = [RequestMethod.GET]
-    )
+    @RequestMapping(value = ["/goodreads"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getGoodreadsToReadBooks(): ResponseEntity<Any> {
         val toReadList = GoodreadsService().retrieveToReadList(apiKey)
         return ResponseEntity.ok(toReadList)
