@@ -36,6 +36,8 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1")
+
+    implementation("net.ricecode:string-similarity:1.0.0")
 }
 
 tasks.withType<KotlinCompile> {
