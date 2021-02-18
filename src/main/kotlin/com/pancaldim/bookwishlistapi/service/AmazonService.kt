@@ -2,6 +2,7 @@ package com.pancaldim.bookwishlistapi.service
 
 import com.pancaldim.bookwishlistapi.exception.PrivateListException
 import com.pancaldim.bookwishlistapi.model.Book
+import com.pancaldim.bookwishlistapi.model.Source
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -34,7 +35,7 @@ class WishListService {
 
                 val coverUrl = cols[0].select("img").attr("src")
 
-                val book = Book(title, author, coauthors, coverUrl)
+                val book = Book(title, author, coauthors, coverUrl, null, Source.Amazon)
                 bookList.add(book)
             }
         } catch (e: IndexOutOfBoundsException) {

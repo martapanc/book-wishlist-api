@@ -10,6 +10,7 @@ import java.net.URL
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.pancaldim.bookwishlistapi.model.Book
+import com.pancaldim.bookwishlistapi.model.Source
 
 @Component
 class Secret {
@@ -50,7 +51,7 @@ class GoodreadsService {
                 val author = bookData["authors"]["author"]["name"].textValue()
                 val coverUrl = bookData["image_url"].textValue()
                 val isbn13 = bookData["isbn13"].textValue()
-                toReadList.add(Book(title, author, listOf(), coverUrl, isbn13))
+                toReadList.add(Book(title, author, listOf(), coverUrl, isbn13, Source.Goodreads))
             }
         }
         con.disconnect()
