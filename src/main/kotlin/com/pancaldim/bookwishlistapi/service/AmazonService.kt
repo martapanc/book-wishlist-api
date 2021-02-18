@@ -7,7 +7,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
-class WishListService {
+class AmazonService {
 
     fun scrapeList(wishList: WishList): List<Book> {
         val document = Jsoup.connect("https://www.amazon.co.uk/hz/wishlist/printview/${wishList.listId}").get()

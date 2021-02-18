@@ -1,8 +1,8 @@
 package com.pancaldim.bookwishlistapi.model
 
 data class Book(
-    val title: String,
-    val author: String,
+    var title: String,
+    var author: String,
 //    val coauthors: List<String> = listOf(),
     val coverUrl: String? = null,
     val isbn13: String? = null,
