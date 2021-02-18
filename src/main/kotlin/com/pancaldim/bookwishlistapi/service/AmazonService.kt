@@ -35,7 +35,7 @@ class WishListService {
 
                 val coverUrl = cols[0].select("img").attr("src")
 
-                val book = Book(title, author, coauthors, coverUrl, null, Source.Amazon)
+                val book = Book(title, author, coverUrl, null, listOf(wishList.name), Source.Amazon)
                 bookList.add(book)
             }
         } catch (e: IndexOutOfBoundsException) {

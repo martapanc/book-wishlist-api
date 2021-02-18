@@ -51,7 +51,7 @@ class GoodreadsService {
                 val author = bookData["authors"]["author"]["name"].textValue()
                 val coverUrl = bookData["image_url"].textValue()
                 val isbn13 = bookData["isbn13"].textValue()
-                toReadList.add(Book(title, author, listOf(), coverUrl, isbn13, Source.Goodreads))
+                toReadList.add(Book(title, author, coverUrl, isbn13, listOf(WishList.Fiction.name), Source.Goodreads))
             }
         }
         con.disconnect()
