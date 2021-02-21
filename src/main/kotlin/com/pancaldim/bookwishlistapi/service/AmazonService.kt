@@ -24,27 +24,27 @@ class AmazonService {
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
         val driver: WebDriver = ChromeDriver()
         driver.manage().window().maximize()
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS)
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.MILLISECONDS)
 
         driver.get(url)
         val jse = driver as JavascriptExecutor
-        var lastHeight: Int = Integer.parseInt(jse.executeScript("return document.body.scrollHeight").toString())
-        var newHeight: Int
-
-        while (true) {
-            jse.executeScript("window.scrollTo(0, document.body.scrollHeight);")
-            newHeight = Integer.parseInt(jse.executeScript("return document.body.scrollHeight").toString())
-            if (newHeight == lastHeight) {
-                break
-            }
-            lastHeight = newHeight
+        while (driver.findElements(By.id("endOfListMarker")).isEmpty()) {
+            jse.executeScript("window.scrollBy(0, 300)")
         }
 
-        Thread.sleep(1500)
         val listUl: WebElement = driver.findElement(By.xpath("//ul[@id='g-items']"))
         val bookElements = listUl.findElements(By.tagName("li"))
         for (element in bookElements) {
-            println(element)
+            val coverUrl = element.findElement(By.cssSelector("[id*=itemImage_] > a > img")).getAttribute("src")
+            val titleElement = element.findElement(By.cssSelector("[id*=itemName_]"))
+            val title = titleElement.getAttribute("title")
+            val link = titleElement.getAttribute("href")
+            var author = element.findElement(By.cssSelector("[id*=item-byline-]")).text
+            author = author
+                .substringAfter("by ", "")
+                .substringBefore(" (", "")
+                .substringBefore(", foreword by")
+            bookList.add(Book(title, author, coverUrl, source = Source.Amazon, link = link))
         }
 
         driver.quit()
