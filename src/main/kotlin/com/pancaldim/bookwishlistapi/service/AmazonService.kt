@@ -37,9 +37,9 @@ class AmazonService {
 
         driver.get(url)
         val jse = driver as JavascriptExecutor
-        while (driver.findElements(By.id("endOfListMarker")).isEmpty()) {
-            jse.executeScript("window.scrollBy(0, 300)")
-        }
+//        while (driver.findElements(By.id("endOfListMarker")).isEmpty()) {
+//            jse.executeScript("window.scrollBy(0, 500)")
+//        }
 
         val listUl: WebElement = driver.findElement(By.xpath("//ul[@id='g-items']"))
         val bookElements = listUl.findElements(By.tagName("li"))
