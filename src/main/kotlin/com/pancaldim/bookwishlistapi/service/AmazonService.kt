@@ -11,17 +11,26 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
+
+@Component
+class Settings {
+
+    @Value("\${CHROMEDRIVER_PATH}")
+    lateinit var chromedriverPath: String
+}
 
 class AmazonService {
 
     private val baseUrl = "https://www.amazon.co.uk/hz/wishlist"
 
-    fun scrapeList(wishList: WishList): List<Book> {
+    fun scrapeList(settings: Settings, wishList: WishList): List<Book> {
         val url = "${baseUrl}/genericItemsPage/${wishList.listId}"
         val bookList = mutableListOf<Book>()
 
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        System.setProperty("webdriver.chrome.driver", settings.chromedriverPath);
         val driver: WebDriver = ChromeDriver()
         driver.manage().window().maximize()
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.MILLISECONDS)

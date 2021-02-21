@@ -1,10 +1,7 @@
 package com.pancaldim.bookwishlistapi.controller
 
 import com.pancaldim.bookwishlistapi.exception.PrivateListException
-import com.pancaldim.bookwishlistapi.service.GoodreadsService
-import com.pancaldim.bookwishlistapi.service.Secret
-import com.pancaldim.bookwishlistapi.service.WishList
-import com.pancaldim.bookwishlistapi.service.AmazonService
+import com.pancaldim.bookwishlistapi.service.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,6 +14,9 @@ class WishListReaderController {
 
     @Autowired
     lateinit var apiKey: Secret
+
+    @Autowired
+    lateinit var settings: Settings
 
     val service = AmazonService()
 
@@ -53,7 +53,7 @@ class WishListReaderController {
     @RequestMapping(value = ["/fiction-2"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getFictionBooks2(): ResponseEntity<Any> {
         return try {
-            val scrapeList = service.scrapeList(WishList.Fiction)
+            val scrapeList = service.scrapeList(settings, WishList.Fiction)
             ResponseEntity.ok(scrapeList)
         } catch (e: PrivateListException) {
             ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.message)
