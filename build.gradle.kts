@@ -38,6 +38,10 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1")
 
     implementation("net.ricecode:string-similarity:1.0.0")
+
+    implementation("org.seleniumhq.selenium:selenium-api:3.141.59")
+    implementation("org.seleniumhq.selenium:selenium-java:3.141.59")
+    implementation("org.seleniumhq.selenium:selenium-chrome-driver:3.141.59")
 }
 
 tasks.withType<KotlinCompile> {

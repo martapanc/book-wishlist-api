@@ -6,11 +6,53 @@ import com.pancaldim.bookwishlistapi.model.Source
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.chrome.ChromeDriver
+import java.util.concurrent.TimeUnit
 
 class AmazonService {
 
+    private val baseUrl = "https://www.amazon.co.uk/hz/wishlist"
+
     fun scrapeList(wishList: WishList): List<Book> {
-        val document = Jsoup.connect("https://www.amazon.co.uk/hz/wishlist/printview/${wishList.listId}").get()
+        val url = "${baseUrl}/genericItemsPage/${wishList.listId}"
+        val bookList = mutableListOf<Book>()
+
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        val driver: WebDriver = ChromeDriver()
+        driver.manage().window().maximize()
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS)
+
+        driver.get(url)
+        val jse = driver as JavascriptExecutor
+        var lastHeight: Int = Integer.parseInt(jse.executeScript("return document.body.scrollHeight").toString())
+        var newHeight: Int
+
+        while (true) {
+            jse.executeScript("window.scrollTo(0, document.body.scrollHeight);")
+            newHeight = Integer.parseInt(jse.executeScript("return document.body.scrollHeight").toString())
+            if (newHeight == lastHeight) {
+                break
+            }
+            lastHeight = newHeight
+        }
+
+        Thread.sleep(1500)
+        val listUl: WebElement = driver.findElement(By.xpath("//ul[@id='g-items']"))
+        val bookElements = listUl.findElements(By.tagName("li"))
+        for (element in bookElements) {
+            println(element)
+        }
+
+        driver.quit()
+        return bookList
+    }
+
+    fun scrapeListFromPrintTemplate(wishList: WishList): List<Book> {
+        val document = Jsoup.connect("${baseUrl}/printview/${wishList.listId}").get()
         val bookList = mutableListOf<Book>()
         try {
             val table: Element = document.select("table")[0]

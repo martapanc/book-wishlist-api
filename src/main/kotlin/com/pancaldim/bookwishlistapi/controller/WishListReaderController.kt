@@ -23,7 +23,7 @@ class WishListReaderController {
     @RequestMapping(value = ["/tech"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getTechBooks(): ResponseEntity<Any> {
         return try {
-            val scrapeList = service.scrapeList(WishList.Tech)
+            val scrapeList = service.scrapeListFromPrintTemplate(WishList.Tech)
             ResponseEntity.ok(scrapeList)
         } catch (e: PrivateListException) {
             ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.message)
@@ -33,7 +33,7 @@ class WishListReaderController {
     @RequestMapping(value = ["/non-fiction"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getNonFictionBooks(): ResponseEntity<Any> {
         return try {
-            val scrapeList = service.scrapeList(WishList.NonFiction)
+            val scrapeList = service.scrapeListFromPrintTemplate(WishList.NonFiction)
             ResponseEntity.ok(scrapeList)
         } catch (e: PrivateListException) {
             ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.message)
@@ -42,6 +42,16 @@ class WishListReaderController {
 
     @RequestMapping(value = ["/fiction"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getFictionBooks(): ResponseEntity<Any> {
+        return try {
+            val scrapeList = service.scrapeListFromPrintTemplate(WishList.Fiction)
+            ResponseEntity.ok(scrapeList)
+        } catch (e: PrivateListException) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.message)
+        }
+    }
+
+    @RequestMapping(value = ["/fiction-2"], produces = ["application/json"], method = [RequestMethod.GET])
+    fun getFictionBooks2(): ResponseEntity<Any> {
         return try {
             val scrapeList = service.scrapeList(WishList.Fiction)
             ResponseEntity.ok(scrapeList)
