@@ -1,2 +1,4 @@
 GOODREADS_KEY=xxx
 CHROMEDRIVER_PATH=yyy
+
+server.port=8085
