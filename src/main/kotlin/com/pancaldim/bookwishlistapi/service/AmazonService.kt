@@ -31,6 +31,7 @@ class AmazonService {
         val bookList = mutableListOf<Book>()
 
         System.setProperty("webdriver.chrome.driver", settings.chromedriverPath);
+        System.setProperty("webdriver.chrome.whitelistedIps", "");
         val driver: WebDriver = ChromeDriver()
         driver.manage().window().maximize()
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.MILLISECONDS)
