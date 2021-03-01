@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 class WishListReaderController {
 
     @Autowired
-    lateinit var apiKey: Secret
+    lateinit var apiSecret: Secret
 
     @Autowired
     lateinit var settings: Settings
@@ -62,7 +62,13 @@ class WishListReaderController {
 
     @RequestMapping(value = ["/goodreads"], produces = ["application/json"], method = [RequestMethod.GET])
     fun getGoodreadsToReadBooks(): ResponseEntity<Any> {
-        val toReadList = GoodreadsService().retrieveToReadList(apiKey)
+        val toReadList = GoodreadsService().retrieveToReadList(apiSecret)
         return ResponseEntity.ok(toReadList)
+    }
+
+    @RequestMapping(value = ["/oauth"], produces = ["application/json"], method = [RequestMethod.GET])
+    fun getOauth(): ResponseEntity<Any> {
+        val oauthResponse = GoodreadsService().oauthService(apiSecret)
+        return ResponseEntity.ok(oauthResponse)
     }
 }
