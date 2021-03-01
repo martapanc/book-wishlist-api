@@ -42,6 +42,8 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-api:3.141.59")
     implementation("org.seleniumhq.selenium:selenium-java:3.141.59")
     implementation("org.seleniumhq.selenium:selenium-chrome-driver:3.141.59")
+
+    implementation("com.google.oauth-client:google-oauth-client:1.31.4")
 }
 
 tasks.withType<KotlinCompile> {
