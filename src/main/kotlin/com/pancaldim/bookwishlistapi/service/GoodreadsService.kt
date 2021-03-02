@@ -28,11 +28,11 @@ class Secret {
 
 class GoodreadsService {
 
-    fun deleteBookFromWishlist(bookId: String, secret: Secret): String {
+    fun deleteBookFromWishlist(bookId: String, reviewId: String, secret: Secret): String {
         val oauthParameters = getOAuthParameters(secret)
         // Use OAuthParameters to access the desired Resource URL
         val requestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
-        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?format=xml")
+        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?id=${reviewId}&format=xml")
         val resp = requestFactory.buildDeleteRequest(genericUrl).execute()
         return resp.parseAsString()
     }

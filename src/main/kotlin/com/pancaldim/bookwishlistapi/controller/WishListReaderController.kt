@@ -5,10 +5,7 @@ import com.pancaldim.bookwishlistapi.service.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class WishListReaderController {
@@ -67,9 +64,9 @@ class WishListReaderController {
         return ResponseEntity.ok(toReadList)
     }
 
-    @RequestMapping(value = ["/delete/{bookId}"], produces = ["application/json"], method = [RequestMethod.POST])
-    fun getOauth(@PathVariable bookId: String): ResponseEntity<Any> {
-        val oauthResponse = GoodreadsService().deleteBookFromWishlist(bookId, apiSecret)
+    @RequestMapping(value = ["/delete"], produces = ["application/json"], method = [RequestMethod.POST])
+    fun getOauth(@RequestParam bookId: String, @RequestParam reviewId: String): ResponseEntity<Any> {
+        val oauthResponse = GoodreadsService().deleteBookFromWishlist(bookId, reviewId, apiSecret)
         return ResponseEntity.ok(oauthResponse)
     }
 }
