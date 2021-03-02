@@ -28,15 +28,24 @@ class Secret {
 
 class GoodreadsService {
 
-    fun oauthService(secret: Secret): String {
-        val BASE_GOODREADS_URL = "https://www.goodreads.com"
-        val TOKEN_SERVER_URL = "$BASE_GOODREADS_URL/oauth/request_token"
-        val AUTHENTICATE_URL = "$BASE_GOODREADS_URL/oauth/authorize"
-        val ACCESS_TOKEN_URL = "$BASE_GOODREADS_URL/oauth/access_token"
+    fun deleteBookFromWishlist(bookId: String, secret: Secret): String {
+        val oauthParameters = getOAuthParameters(secret)
+        // Use OAuthParameters to access the desired Resource URL
+        val requestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
+        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?format=xml")
+        val resp = requestFactory.buildDeleteRequest(genericUrl).execute()
+        return resp.parseAsString()
+    }
+
+    private fun getOAuthParameters(secret: Secret): OAuthParameters {
+        val baseUrl = "https://www.goodreads.com"
+        val tokenServerUrl = "$baseUrl/oauth/request_token"
+        val authenticateUrl = "$baseUrl/oauth/authorize"
+        val accessTokenUrl = "$baseUrl/oauth/access_token"
 
         val signer = OAuthHmacSigner()
         // Get Temporary Token
-        val getTemporaryToken = OAuthGetTemporaryToken(TOKEN_SERVER_URL)
+        val getTemporaryToken = OAuthGetTemporaryToken(tokenServerUrl)
         signer.clientSharedSecret = secret.apiSecret
         getTemporaryToken.signer = signer
         getTemporaryToken.consumerKey = secret.apiKey
@@ -44,7 +53,7 @@ class GoodreadsService {
         val temporaryTokenResponse = getTemporaryToken.execute()
 
         // Build Authenticate URL
-        val accessTempToken = OAuthAuthorizeTemporaryTokenUrl(AUTHENTICATE_URL)
+        val accessTempToken = OAuthAuthorizeTemporaryTokenUrl(authenticateUrl)
         accessTempToken.temporaryToken = temporaryTokenResponse.token
         val authUrl = accessTempToken.build()
 
@@ -56,7 +65,7 @@ class GoodreadsService {
 
         println("Waiting time complete - assuming access granted and attempting to get access token")
         // Get Access Token using Temporary token and Verifier Code
-        val getAccessToken = OAuthGetAccessToken(ACCESS_TOKEN_URL)
+        val getAccessToken = OAuthGetAccessToken(accessTokenUrl)
         getAccessToken.signer = signer
         // NOTE: This is the main difference from the StackOverflow example
         signer.tokenSharedSecret = temporaryTokenResponse.tokenSecret
@@ -71,12 +80,7 @@ class GoodreadsService {
         oauthParameters.signer = signer
         oauthParameters.consumerKey = secret.apiKey
         oauthParameters.token = accessTokenResponse.token
-
-        // Use OAuthParameters to access the desired Resource URL
-        val requestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
-        val genericUrl = GenericUrl("https://www.goodreads.com/api/auth_user")
-        val resp = requestFactory.buildGetRequest(genericUrl).execute()
-        return resp.parseAsString()
+        return oauthParameters
     }
 
     fun retrieveToReadList(secret: Secret): List<Book> {
