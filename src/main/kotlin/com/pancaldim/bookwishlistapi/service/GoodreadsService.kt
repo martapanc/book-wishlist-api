@@ -10,11 +10,20 @@ import java.net.URL
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.google.api.client.auth.oauth.*
-import com.google.api.client.http.GenericUrl
+import com.google.api.client.http.*
 import com.google.api.client.http.apache.ApacheHttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.pancaldim.bookwishlistapi.model.Book
 import com.pancaldim.bookwishlistapi.model.Source
+import com.google.api.client.http.UrlEncodedContent
+
+import com.google.api.client.http.HttpContent
+
+import java.util.HashMap
+
+
+
+
 
 @Component
 class Secret {
@@ -31,9 +40,20 @@ class GoodreadsService {
     fun deleteBookFromWishlist(bookId: String, reviewId: String, secret: Secret): String {
         val oauthParameters = getOAuthParameters(secret)
         // Use OAuthParameters to access the desired Resource URL
+
+//        val requestFactory: HttpRequestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
+//        val genericUrl = GenericUrl("https://www.goodreads.com/api/auth_user")
+//        val resp: HttpResponse = requestFactory.buildGetRequest(genericUrl).execute()
+//        return resp.parseAsString()
         val requestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
-        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?id=${reviewId}&format=xml")
-        val resp = requestFactory.buildDeleteRequest(genericUrl).execute()
+        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}")
+//        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?id=${reviewId}&format=xml")
+
+        val params: MutableMap<String, Any> = HashMap()
+        params["id"] = reviewId
+        val content: HttpContent = UrlEncodedContent(params)
+
+        val resp = requestFactory.buildPostRequest(genericUrl, content).execute()
         return resp.parseAsString()
     }
 
