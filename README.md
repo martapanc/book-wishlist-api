@@ -30,3 +30,4 @@ heroku ps:scale web=1
 - Sample Amazon Wishlist scraper with Selenium: https://github.com/miguelvazsilva/selenium-amazon
 - Amazon Wish lister: https://github.com/doitlikejustin/amazon-wish-lister  
 - Scraping Amazon wishlists: https://www.reddit.com/r/amazon/comments/7paenb/amazon_wishlist_web_scraper/
+- Destroy reviews endpoint not working: https://www.goodreads.com/topic/show/19383522-using-review-destroy-to-delete-a-review-of-a-book
