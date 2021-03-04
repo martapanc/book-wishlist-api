@@ -41,19 +41,19 @@ class GoodreadsService {
         val oauthParameters = getOAuthParameters(secret)
         // Use OAuthParameters to access the desired Resource URL
 
-//        val requestFactory: HttpRequestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
-//        val genericUrl = GenericUrl("https://www.goodreads.com/api/auth_user")
-//        val resp: HttpResponse = requestFactory.buildGetRequest(genericUrl).execute()
+        val requestFactory: HttpRequestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
+        val genericUrl = GenericUrl("https://www.goodreads.com/api/auth_user")
+        val resp: HttpResponse = requestFactory.buildGetRequest(genericUrl).execute()
 //        return resp.parseAsString()
-        val requestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
-        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}")
-//        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?id=${reviewId}&format=xml")
-
-        val params: MutableMap<String, Any> = HashMap()
-        params["id"] = reviewId
-        val content: HttpContent = UrlEncodedContent(params)
-
-        val resp = requestFactory.buildPostRequest(genericUrl, content).execute()
+//        val requestFactory = ApacheHttpTransport().createRequestFactory(oauthParameters)
+//        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}")
+////        val genericUrl = GenericUrl("https://www.goodreads.com/review/destroy/${bookId}?id=${reviewId}&format=xml")
+//
+//        val params: MutableMap<String, Any> = HashMap()
+//        params["id"] = reviewId
+//        val content: HttpContent = UrlEncodedContent(params)
+//
+//        val resp = requestFactory.buildPostRequest(genericUrl, content).execute()
         return resp.parseAsString()
     }
 
