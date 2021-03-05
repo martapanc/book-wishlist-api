@@ -31,3 +31,6 @@ heroku ps:scale web=1
 - Amazon Wish lister: https://github.com/doitlikejustin/amazon-wish-lister  
 - Scraping Amazon wishlists: https://www.reddit.com/r/amazon/comments/7paenb/amazon_wishlist_web_scraper/
 - Destroy reviews endpoint not working: https://www.goodreads.com/topic/show/19383522-using-review-destroy-to-delete-a-review-of-a-book
+- OAuth example in Java: https://github.com/davecahill/goodreads-oauth-sample/blob/master/src/main/java/oauth/GoodreadsOAuthSample.java
+- Sample API client: https://github.com/rharter/goodreads-api
+- GR API from Android: https://medium.com/@intmainreturn00/goodreads-api-from-android-with-kotlin-fd8c2c7338d8
