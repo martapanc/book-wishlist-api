@@ -45,6 +45,7 @@ dependencies {
 
     implementation("com.google.oauth-client:google-oauth-client:1.31.4")
     implementation("com.google.http-client:google-http-client-apache-v2:1.39.0")
+    implementation("com.google.guava:guava:30.1-jre")
 }
 
 tasks.withType<KotlinCompile> {
